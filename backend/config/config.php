@@ -3,7 +3,7 @@
 define('APP_NAME', 'Luxury Yachts API');
 define('APP_VERSION', '1.0.0');
 
-define('JWT_SECRET', 'your-secret-key-change-in-production');
+define('JWT_SECRET', 'SOME-SECRET-KEY-123ABC');
 define('JWT_ALGORITHM', 'HS256');
 define('JWT_EXPIRATION', 86400);
 

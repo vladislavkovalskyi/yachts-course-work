@@ -1,0 +1,9 @@
+*.log
+*.cache
+.htpasswd
+uploads/*
+!uploads/.gitkeep
+config/local.php
+vendor/
+composer.lock
+

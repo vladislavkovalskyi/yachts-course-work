@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../config/config.php';
+
 class Database {
     private $host = 'localhost';
     private $db_name = 'luxury_yachts';
