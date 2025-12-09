@@ -4,6 +4,10 @@ require_once __DIR__ . '/../../includes/Response.php';
 require_once __DIR__ . '/../../includes/Auth.php';
 require_once __DIR__ . '/../../includes/Database.php';
 
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    Response::json(['success' => true], 200);
+}
+
 $auth = new Auth();
 $database = new Database();
 $db = $database->getConnection();

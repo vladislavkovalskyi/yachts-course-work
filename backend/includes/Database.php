@@ -4,9 +4,10 @@ require_once __DIR__ . '/../config/config.php';
 
 class Database {
     private $host = 'localhost';
+    private $port = 3306;
     private $db_name = 'luxury_yachts';
     private $username = 'root';
-    private $password = '';
+    private $password = '228485648';
     private $conn;
 
     public function getConnection() {

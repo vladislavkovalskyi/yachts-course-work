@@ -4,14 +4,23 @@ require_once __DIR__ . '/../../includes/Response.php';
 require_once __DIR__ . '/../../includes/Auth.php';
 require_once __DIR__ . '/../../includes/Database.php';
 
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    Response::json(['success' => true], 200);
+}
+
 $auth = new Auth();
 $database = new Database();
 $db = $database->getConnection();
 $method = $_SERVER['REQUEST_METHOD'];
 
-$pathParts = array_filter(explode('/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)));
+$requestPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$pathParts = array_filter(explode('/', $requestPath));
 $pathParts = array_values($pathParts);
-$id = $pathParts[2] ?? null;
+
+$id = null;
+if (count($pathParts) >= 3 && $pathParts[0] === 'api' && $pathParts[1] === 'destinations' && is_numeric($pathParts[2])) {
+    $id = $pathParts[2];
+}
 
 switch ($method) {
     case 'GET':
@@ -48,6 +57,10 @@ switch ($method) {
             $stmt->execute();
             
             $destinations = $stmt->fetchAll();
+            
+            if ($destinations === false) {
+                $destinations = [];
+            }
             
             Response::success($destinations, 'Destinations retrieved');
         }
