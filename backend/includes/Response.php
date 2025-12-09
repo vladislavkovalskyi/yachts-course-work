@@ -2,19 +2,26 @@
 
 class Response {
     public static function json($data, $statusCode = 200) {
-        http_response_code($statusCode);
-        header('Content-Type: application/json; charset=utf-8');
-        
-        $allowedOrigins = CORS_ALLOWED_ORIGINS;
-        $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-        
-        if (in_array($origin, $allowedOrigins)) {
-            header("Access-Control-Allow-Origin: $origin");
+        if (!headers_sent()) {
+            $allowedOrigins = CORS_ALLOWED_ORIGINS;
+            $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+            
+            if (!empty($origin) && in_array($origin, $allowedOrigins)) {
+                header("Access-Control-Allow-Origin: $origin");
+                header('Access-Control-Allow-Credentials: true');
+            } elseif (!empty($origin)) {
+                header("Access-Control-Allow-Origin: $origin");
+                header('Access-Control-Allow-Credentials: true');
+            } else {
+                header("Access-Control-Allow-Origin: *");
+            }
+            
+            header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+            header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+            header('Access-Control-Max-Age: 3600');
+            header('Content-Type: application/json; charset=utf-8');
+            http_response_code($statusCode);
         }
-        
-        header('Access-Control-Allow-Credentials: true');
-        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-        header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
         
         echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
         exit;

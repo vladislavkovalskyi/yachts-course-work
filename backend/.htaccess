@@ -1,18 +1,9 @@
 RewriteEngine On
+DirectorySlash Off
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_METHOD} =OPTIONS
+RewriteRule .* - [R=200,L]
 
+RewriteCond %{REQUEST_URI} !^/api/index\.php$
 RewriteRule ^api/(.*)$ api/index.php [QSA,L]
-
-Header set Access-Control-Allow-Origin "*"
-Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-Header set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
-Header set Access-Control-Allow-Credentials "true"
-
-<IfModule mod_headers.c>
-    <FilesMatch "\.(php)$">
-        Header set Access-Control-Allow-Origin "*"
-    </FilesMatch>
-</IfModule>
 

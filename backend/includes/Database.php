@@ -3,12 +3,20 @@
 require_once __DIR__ . '/../config/config.php';
 
 class Database {
-    private $host = 'localhost';
-    private $port = 3306;
-    private $db_name = 'luxury_yachts';
-    private $username = 'root';
-    private $password = '228485648';
+    private $host;
+    private $port;
+    private $db_name;
+    private $username;
+    private $password;
     private $conn;
+
+    public function __construct() {
+        $this->host = getenv('DB_HOST') ?: 'localhost';
+        $this->port = getenv('DB_PORT') ?: 3306;
+        $this->db_name = getenv('DB_NAME') ?: 'luxury_yachts';
+        $this->username = getenv('DB_USER') ?: 'root';
+        $this->password = getenv('DB_PASSWORD') ?: '';
+    }
 
     public function getConnection() {
         $this->conn = null;

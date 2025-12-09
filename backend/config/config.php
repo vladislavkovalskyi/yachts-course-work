@@ -10,6 +10,7 @@ define('JWT_EXPIRATION', 86400);
 define('CORS_ALLOWED_ORIGINS', [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
+    'http://frontend:3000',
 ]);
 
 define('UPLOAD_DIR', __DIR__ . '/../uploads/');
